@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,6 +30,19 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
+    }
+    @GetMapping("/above-age")
+    public ResponseEntity<List<User>> getUsersAboveAge(@RequestParam Integer age) {
+        try {
+            if (userService.getUsersAboveAge(age).isEmpty()) {
+                return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.ok(userService.getUsersAboveAge(age));
+            }
+        }
+        catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {

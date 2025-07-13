@@ -16,9 +16,14 @@ public class InMemoryUserRepository implements com.example.test4m.repositories.I
     }
 
     @Override
+    public List<User> findUsersAboveAge(int age) {
+        return users.stream().filter(u -> u.getAge() > age).toList();
+    }
+
+    @Override
     public Optional<User> findByUsername(String username) {
         return users.stream().filter(user -> user.getName()
-                .equalsIgnoreCase(username)).findFirst();
+                .equalsIgnoreCase(username.toString())).findFirst();
     }
 
     @Override

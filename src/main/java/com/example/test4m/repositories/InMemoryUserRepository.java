@@ -8,6 +8,7 @@ import java.util.Optional;
 @Repository
 public interface InMemoryUserRepository {
     List<User> findAll();
+    List<User> findUsersAboveAge(int age);
     Optional<User> findByUsername(String username);
     Optional<User> findById(Long id);
     User save(User user);

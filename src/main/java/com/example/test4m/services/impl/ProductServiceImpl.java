@@ -41,10 +41,14 @@ public class ProductServiceImpl implements ProductService {
     public Product addProduct(Product product) {
         return inMemoryProductRepository.addProduct(product);
     }
+    @Override
+    public List<Product> getAbovePrice(float price){
+        return inMemoryProductRepository.getAbovePrice(price);
+    }
 
     @Override
     public Product updateProduct(Long id, Product product) {
-        if (getAllProducts().stream().anyMatch(p -> p.getId().equals(id))) {
+        if (getProductById(id).isPresent()) {
             product.setId(id);
             return addProduct(product);
         }

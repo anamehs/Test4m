@@ -13,5 +13,6 @@ public interface InMemoryProductRepository {
     Optional<Product> getProductByName(String name);
     Optional<Product> getProductByCategory(String category);;
     Product addProduct(Product product);
+    List<Product> getAbovePrice(float price);
     void deleteProduct(Long id);
 }

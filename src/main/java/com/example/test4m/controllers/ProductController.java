@@ -37,6 +37,16 @@ public class ProductController {
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         return productService.getProductById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+    @GetMapping("/above-price")
+    public ResponseEntity<List<Product>> getAbovePrice(@RequestParam Float price){
+        List<Product> abovePrice = productService.getAbovePrice(price);
+        if (abovePrice.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        else {
+            return ResponseEntity.ok(productService.getAbovePrice(price));
+        }
+    }
     @GetMapping("/category/{category}")
     public ResponseEntity<Product> getProductByCategory(@PathVariable String category) {
         return productService.getProductByCategory(category).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());

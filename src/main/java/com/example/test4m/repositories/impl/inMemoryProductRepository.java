@@ -17,6 +17,9 @@ public class inMemoryProductRepository implements InMemoryProductRepository {
     public List<Product> getAllProducts() {
         return products;
     }
+    public List<Product> getAbovePrice(float price){
+        return products.stream().filter(p -> p.getPrice() > price).toList();
+    }
 
     @Override
     public Optional<Product> getProductById(Long id) {
@@ -37,8 +40,7 @@ public class inMemoryProductRepository implements InMemoryProductRepository {
         if (product.getId() != null){
             products.removeIf(p -> p.getId().equals(product.getId()));
         }
-        else{
-            product.setId(id);
+        else {product.setId(id);
             id += 1;
         }
         products.add(product);

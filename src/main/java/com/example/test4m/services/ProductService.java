@@ -13,5 +13,6 @@ public interface ProductService {
     Optional<Product> getProductByCategory(String category);;
     Product addProduct(Product product);
     Product updateProduct(Long id, Product product);
+    List<Product> getAbovePrice(float price);
     void deleteProduct(Long id);
 }

@@ -22,57 +22,32 @@ public class ProductController {
     }
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product createdProduct = productService.addProduct(product);
-        if (!(createdProduct == null)) {
-            return ResponseEntity.ok(createdProduct);
-        }
-        else{
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(productService.addProduct(product));
     }
     @PutMapping
     public ResponseEntity<Product> updateProduct(@RequestParam Long id, @RequestBody Product product) {
-        Product updatedProduct = productService.updateProduct(id, product);
-        if (!(updatedProduct == null)) {
-            return ResponseEntity.ok(updatedProduct);
+        try{
+            return ResponseEntity.ok(productService.updateProduct(id, product));
         }
-        else{
+        catch (Exception e){
             return ResponseEntity.notFound().build();
         }
     }
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product gottenProduct = productService.getProductById(id).orElse(null);
-        if (!(gottenProduct == null)) {
-            return ResponseEntity.ok(gottenProduct);
-        }
-        else{
-            return ResponseEntity.notFound().build();
-        }
+        return productService.getProductById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     @GetMapping("/category/{category}")
     public ResponseEntity<Product> getProductByCategory(@PathVariable String category) {
-        Product gottenProduct = productService.getProductByCategory(category).orElse(null);
-        if (!(gottenProduct == null)) {
-            return ResponseEntity.ok(gottenProduct);
-        }
-        else{
-            return ResponseEntity.notFound().build();
-        }
+        return productService.getProductByCategory(category).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     @GetMapping("/name/{name}")
     public ResponseEntity<Product> getProductById(@PathVariable String name) {
-        Product gottenProduct = productService.getProductByName(name).orElse(null);
-        if (!(gottenProduct == null)) {
-            return ResponseEntity.ok(gottenProduct);
-        }
-        else{
-            return ResponseEntity.notFound().build();
-        }
+        return productService.getProductByName(name).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
-        if (productService.getProductById(id) != null){
+        if (productService.getProductById(id).isPresent()){
             productService.deleteProduct(id);
             return ResponseEntity.ok().build();
         }

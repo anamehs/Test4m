@@ -3,6 +3,7 @@ package com.example.test4m.services.impl;
 import com.example.test4m.entity.Product;
 import com.example.test4m.repositories.InMemoryProductRepository;
 import com.example.test4m.services.ProductService;
+import com.example.test4m.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final InMemoryProductRepository inMemoryProductRepository;
+    private final UserService userService;
+
     @Override
     public List<Product> getAllProducts() {
         return inMemoryProductRepository.getAllProducts();
@@ -41,17 +44,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(Long id, Product product) {
-        if (product != null) {
-            getAllProducts().stream().filter(p -> p.getId().equals(id)).findFirst().ifPresent(p -> deleteProduct(id));
-            addProduct(product);
-            return product;
+        if (getAllProducts().stream().anyMatch(p -> p.getId().equals(id))) {
+            product.setId(id);
+            return addProduct(product);
         }
-        return null;
+        else{
+            throw new IllegalArgumentException("Not found product to update");
+        }
     }
 
     @Override
     public void deleteProduct(Long id) {
         inMemoryProductRepository.deleteProduct(id);
-        return;
     }
 }

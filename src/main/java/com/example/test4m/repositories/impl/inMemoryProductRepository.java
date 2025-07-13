@@ -34,18 +34,15 @@ public class inMemoryProductRepository implements InMemoryProductRepository {
 
     @Override
     public Product addProduct(Product product) {
-        if (product != null) {
-           if (products.stream().filter(p -> p.getId().equals(product.getId())).findFirst().orElse(null) == null){
-               product.setId(id);
-               id += 1;
-               products.add(product);
-               return product;
-           };
-           return null;
+        if (product.getId() != null){
+            if (getProductById(product.getId()).isPresent()){
+                products.remove(getProductById(product.getId()).orElse(null));
+            }
         }
-        else {
-            return null;
-        }
+        product.setId(id);
+        id += 1;
+        products.add(product);
+        return product;
     }
 
 

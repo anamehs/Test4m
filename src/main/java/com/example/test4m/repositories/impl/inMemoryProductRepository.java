@@ -35,12 +35,12 @@ public class inMemoryProductRepository implements InMemoryProductRepository {
     @Override
     public Product addProduct(Product product) {
         if (product.getId() != null){
-            if (getProductById(product.getId()).isPresent()){
-                products.remove(getProductById(product.getId()).orElse(null));
-            }
+            products.removeIf(p -> p.getId().equals(product.getId()));
         }
-        product.setId(id);
-        id += 1;
+        else{
+            product.setId(id);
+            id += 1;
+        }
         products.add(product);
         return product;
     }
@@ -49,8 +49,6 @@ public class inMemoryProductRepository implements InMemoryProductRepository {
 
     @Override
     public void deleteProduct(Long id) {
-        if (id != null){
-            products.stream().filter(p -> p.getId().equals(id)).findFirst().ifPresent(products::remove);
-        }
+        products.removeIf(p -> p.getId().equals(id));
     }
 }

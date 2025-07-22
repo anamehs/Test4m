@@ -2,6 +2,7 @@ package com.example.test4m.services.impl;
 
 import com.example.test4m.entity.Product;
 import com.example.test4m.repositories.InMemoryProductRepository;
+import com.example.test4m.repositories.ProductRepository;
 import com.example.test4m.services.ProductService;
 import com.example.test4m.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,36 +15,35 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    private final InMemoryProductRepository inMemoryProductRepository;
-    private final UserService userService;
+    private final ProductRepository inMemoryProductRepository;
 
     @Override
     public List<Product> getAllProducts() {
-        return inMemoryProductRepository.getAllProducts();
+        return inMemoryProductRepository.findAll();
     }
 
     @Override
     public Optional<Product> getProductById(Long id) {
-        return inMemoryProductRepository.getProductById(id);
+        return inMemoryProductRepository.findById(id);
     }
 
     @Override
     public Optional<Product> getProductByName(String name) {
-        return inMemoryProductRepository.getProductByName(name);
+        return null;
     }
 
     @Override
     public Optional<Product> getProductByCategory(String category) {
-        return inMemoryProductRepository.getProductByCategory(category);
+        return null;
     }
 
     @Override
     public Product addProduct(Product product) {
-        return inMemoryProductRepository.addProduct(product);
+        return inMemoryProductRepository.save(product);
     }
     @Override
     public List<Product> getAbovePrice(float price){
-        return inMemoryProductRepository.getAbovePrice(price);
+        return null;
     }
 
     @Override
@@ -59,6 +59,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
-        inMemoryProductRepository.deleteProduct(id);
+        inMemoryProductRepository.deleteById(id);
     }
 }

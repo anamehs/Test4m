@@ -1,6 +1,7 @@
 package com.example.test4m.services.impl;
 
 import com.example.test4m.entity.User;
+import com.example.test4m.repositories.UserRepository;
 import com.example.test4m.repositories.impl.InMemoryUserRepository;
 import com.example.test4m.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final InMemoryUserRepository inMemoryUserRepository;
+    private final UserRepository inMemoryUserRepository;
     @Override
     public List<User> getAllUsers() {
         return inMemoryUserRepository.findAll();
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByName(String name) {
-        return inMemoryUserRepository.findByUsername(name);
+        return null;
     }
 
     @Override
@@ -53,6 +54,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersAboveAge(int age) {
-        return inMemoryUserRepository.findUsersAboveAge(age);
+        return null;
     }
 }

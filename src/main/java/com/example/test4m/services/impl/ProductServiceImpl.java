@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     public Product updateProduct(Long id, Product product) {
         if (getProductById(id).isPresent()) {
             product.setId(id);
-            return addProduct(product);
+            return inMemoryProductRepository.save(product);
         }
         else{
             throw new IllegalArgumentException("Not found product to update");

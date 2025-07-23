@@ -29,12 +29,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Product> getProductByName(String name) {
-        return null;
+        return Optional.empty();
     }
 
     @Override
     public Optional<Product> getProductByCategory(String category) {
-        return null;
+        return Optional.empty();
     }
 
     @Override
